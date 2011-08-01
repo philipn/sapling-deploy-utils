@@ -1,16 +1,16 @@
 <VirtualHost *:80>
-	ServerAdmin webmaster@example.org
-	ServerName example.org
+    ServerAdmin webmaster@example.org
+    ServerName example.org
     ServerAlias example.org www.example.org
 
-	DocumentRoot /srv/sites/example/sapling
+    DocumentRoot /srv/sites/example/sapling
 
-	<Directory /srv/sites/example/>
-		Options -Indexes FollowSymLinks MultiViews
-		AllowOverride None
-		Order allow,deny
-		allow from all
-	</Directory>
+    <Directory /srv/sites/example/>
+        Options -Indexes FollowSymLinks MultiViews
+        AllowOverride None
+        Order allow,deny
+        allow from all
+    </Directory>
 
     # gzip content for much faster page loads.
     <Location />
@@ -36,20 +36,20 @@
         Header append Vary User-Agent env=!dont-vary
     </Location>
 
-	# Dont' gzip the user-uploaded content in the media directory.
+    # Dont' gzip the user-uploaded content in the media directory.
     # The content is assumed to be JPEG, PNG, etc, which is already
     # compressed.
-	<Location /media/>
+    <Location /media/>
         SetEnv no-gzip
-	</Location>
+    </Location>
 
-	ErrorLog /var/log/apache2/error.log
+    ErrorLog /var/log/apache2/error.log
 
-	# Possible values include: debug, info, notice, warn, error, crit,
-	# alert, emerg.
-	LogLevel warn
+    # Possible values include: debug, info, notice, warn, error, crit,
+    # alert, emerg.
+    LogLevel warn
 
-	CustomLog /var/log/apache2/access.log combined
+    CustomLog /var/log/apache2/access.log combined
 
     WSGIScriptAlias / /srv/sites/example/sapling/deploy/django.wsgi
 
@@ -58,11 +58,11 @@
     Alias /media/ /srv/sites/example/sapling/media/
     Alias /static/ /srv/sites/example/sapling/static/
 
-	# The media directory, which contains user-uploaded content,
-	# should be set to force downloads. This is *extremely* important
+    # The media directory, which contains user-uploaded content,
+    # should be set to force downloads. This is *extremely* important
     # for security reasons.
-	<Location /media/>
+    <Location /media/>
         Header set Content-Disposition attachment
-	</Location>
+    </Location>
 
 </VirtualHost>
