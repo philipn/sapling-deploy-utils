@@ -1,0 +1,39 @@
+<VirtualHost *:80>
+	ServerAdmin webmaster@localhost
+	ServerName tile.map.localwiki.org
+        ServerAlias tile.map.localwiki.org a.tile.map.localwiki.org
+        ServerAlias tile.map.localwiki.org b.tile.map.localwiki.org
+        ServerAlias tile.map.localwiki.org c.tile.map.localwiki.org
+        ServerAlias tile.map.localwiki.org www.tile.map.localwiki.org
+
+	DocumentRoot /var/www/
+	<Directory />
+		Options FollowSymLinks
+		AllowOverride None
+	</Directory>
+	<Directory /var/www/>
+		Options -Indexes FollowSymLinks MultiViews
+		AllowOverride None
+		Order allow,deny
+		allow from all
+	</Directory>
+
+	ErrorLog /var/log/apache2/error.log
+
+	# Possible values include: debug, info, notice, warn, error, crit,
+	# alert, emerg.
+	LogLevel warn
+
+	CustomLog /var/log/apache2/access.log combined
+
+        <Proxy *>
+            Order deny,allow
+            Allow from all
+        </Proxy>
+	<Location />
+            # :6081 is our varnish instance that's caching cloudmade tiles
+            ProxyPass http://127.0.0.1:6081/
+            ProxyPassReverse http://127.0.0.1:6081/
+        </Location>
+
+</VirtualHost>

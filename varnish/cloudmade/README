@@ -1,0 +1,5 @@
+These are our config files for locally caching cloudmade tiles using varnish.
+
+Requests go like this:
+
+Client: "Gimme a.tile.localwiki.org/blah" -> Apache ---proxy--> Varnish --> served from cache or from a.tile.cloudmade.com
